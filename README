@@ -1,0 +1,6 @@
+This package contains the files for the fit alignment and overlap alignment as well as all necessary files to make alignment modifications you may need. 
+
+Fit alignment: cd to ./fit directory and compile by g++ fit_mols_and_store_als.cc
+Overlap alignment: cd to ./ovlp directory and compile by g++ ovlp.cc
+
+This code comes with absolutely no warranty and is free for redistribution and use for non-commercial purposed only.
