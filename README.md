@@ -1,6 +1,6 @@
 Notes by Martin Muggli
 ======================
-This git repo is for simple maintance/usability changes relative to Valuev et al.'s original software (the root commit in the DAG).
+This git repo is for simple maintance/usability changes relative to Valuev et al.'s original software (the root commit in the git DAG) corresponding to the paper [Valouev,A., *et al.*:Alignment of optical maps. J. Comp. Biol. **13**(2)(2006) 442–462](http://www.ncbi.nlm.nih.gov/pubmed/16597251).
 
 Their paper describes a number of alignment scoring parameters.  These appear to match to the  constructor parameters of a scoring_params object as follows:
 
