@@ -99,9 +99,10 @@ Detailed alignments look like this:
     t-score:9
 
 
-## Non-detailed alignment output format
+### Non-detailed alignment output format
 
 The fields in the first line are:
+
 1. Target name
 2. Ref name
 3. Target size
@@ -118,8 +119,8 @@ The second line consists of pairs of fragment numbers that matched between the t
     0 6 1 7 2 8 4 9 5 10 7 11 9 12 10 13 11 14 12 15 13 16 14 18 15 19 16 20 17 21 19 22 20 23 21 25 22 26 23 27 25 28 26 29 28 31
 
 
-Valuev *et al.*'s original readme
-===============================
+# Valuev *et al.*'s original readme
+
 This package contains the files for the fit alignment and overlap alignment as well as all necessary files to make alignment modifications you may need. 
 
 Fit alignment: cd to ./fit directory and compile by g++ fit_mols_and_store_als.cc
