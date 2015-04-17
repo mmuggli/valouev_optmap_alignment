@@ -2,7 +2,7 @@ Notes by Martin Muggli
 ======================
 This git repo is for simple maintance/usability changes relative to Valuev et al.'s original software (the root commit in the DAG).
 
-Their paper describes a number of alignment scoring parameters.  These appear to match to the follow constructor parameters of a scoring_params object as follows:
+Their paper describes a number of alignment scoring parameters.  These appear to match to the  constructor parameters of a scoring_params object as follows:
 
     scoring_params(double _mu,            //for old scoring
                    double _lambda,        //penalty for the missing restriction site  
@@ -17,6 +17,12 @@ Their paper describes a number of alignment scoring parameters.  These appear to
                    double _eta,           //the std for fragments below lo_fr_thresh
                       
                    double _lo_fr_thresh); //the size thresh below which the
+
+
+as seen in these lines of code:
+
+    ovlp/ovlp.cc:    scoring_params sp(.2,1.2,.9,7,17.43,0.58, 0.0015, 0.8, 1, 3);
+    fit/fit_mols_and_store_als.cc:  scoring_params sp(0.2,2,1,5,17.43,0.579, 0.005, 0.8, 3, 1); //scoring parameters
 
 
 contrib/soma_silico2valuev.py will convert from SOMA's in-silico digested file format (the actual file input to their match executable, also used by TWIN) to valuev's format
