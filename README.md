@@ -1,6 +1,10 @@
-Notes by Martin Muggli
-======================
+# Notes by Martin Muggli
+
 This git repo is for simple maintance/usability changes relative to Valuev et al.'s original software (the root commit in the git DAG) corresponding to the paper [Valouev,A., *et al.*:Alignment of optical maps. J. Comp. Biol. **13**(2)(2006) 442–462](http://www.ncbi.nlm.nih.gov/pubmed/16597251).
+
+## Valuev Inputs
+
+### Alignment Parameter
 
 Their paper describes a number of alignment scoring parameters.  These appear to match to the  constructor parameters of a scoring_params object as follows:
 
@@ -19,7 +23,7 @@ Their paper describes a number of alignment scoring parameters.  These appear to
                    double _lo_fr_thresh); //the size thresh below which the
 
 
-as seen in these lines of code:
+as seen in these lines of code (currently you must edit the code and recompile):
 
     ovlp/ovlp.cc:    scoring_params sp(.2,1.2,.9,7,17.43,0.58, 0.0015, 0.8, 1, 3);
     fit/fit_mols_and_store_als.cc:  scoring_params sp(0.2,2,1,5,17.43,0.579, 0.005, 0.8, 3, 1); //scoring parameters
@@ -27,8 +31,8 @@ as seen in these lines of code:
 
 contrib/soma_silico2valuev.py will convert from SOMA's in-silico digested file format (the actual file input to their match executable, also used by TWIN) to valuev's format
 
-Valuev file format
-------------------
+### Valuev Input File Format
+
 Every sequence of fragments (either on the query or database side) consists of set of three lines:
 
 First line:  Read Name (the entire line)
@@ -57,6 +61,61 @@ And here are several in silico digested contigs in a separate file:
     NODE_3_length_83550_cov_12.8835_ID_5 83550 13
     enzyme enzyme 1.752 14.297 0.233 6.33 3.691 22.282 5.844 0.991 2.29 2.93 6.26 3.844 12.49
     ----- <EOF> ---
+
+## Valuev Outputs
+
+Valuev generates two output files.
+
+### Detailed output format
+
+All the fragments of one read are to the left of the arrows, and all the fragments for the overlapping read are to the right of the arrows.  Each line represents a match between one or more (comma delimited) fragments between the reads.  Each fragment is represented by a fragment number, a colon, and the fragment size in Kbp.
+
+Detailed alignments look like this:
+
+    alignment for 5038560_0_190 and 5038575_0_1196
+    [ 6:3.057 ]->[ 0:3.853 ] s: 2.04612
+    [ 7:4.85 ]->[ 1:4.476 ] s: 3.60273
+    [ 8:7.791 ]->[ 2:4.231, 3:3.206 ] s: 6.14635
+    [ 9:3.821 ]->[ 4:3.93 ] s: 8.31432
+    [ 10:24.782 ]->[ 5:14.06, 6:20.276 ] s: 7.62454
+    [ 11:24.504 ]->[ 7:6.199, 8:18.484 ] s: 9.37101
+    [ 12:10.896 ]->[ 9:8.355 ] s: 10.3717
+    [ 13:18.523 ]->[ 10:21.055 ] s: 11.8576
+    [ 14:5.845 ]->[ 11:5.822 ] s: 13.3931
+    [ 15:3.718 ]->[ 12:3.444 ] s: 15.5224
+    [ 16:6.45, 17:3.159 ]->[ 13:11.19 ] s: 17.6461
+    [ 18:4.122 ]->[ 14:7.027 ] s: 18.0597
+    [ 19:10.706 ]->[ 15:10.671 ] s: 19.5729
+    [ 20:8.279 ]->[ 16:9.077 ] s: 21.019
+    [ 21:7.973 ]->[ 17:2.036, 18:5.022 ] s: 23.5441
+    [ 22:11.241 ]->[ 19:10.991 ] s: 25.0582
+    [ 23:3.483, 24:10.15 ]->[ 20:13.975 ] s: 27.0611
+    [ 25:3.929 ]->[ 21:2.231 ] s: 28.5938
+    [ 26:8.411 ]->[ 22:7.064 ] s: 29.9215
+    [ 27:13.656 ]->[ 23:1.787, 24:10.231 ] s: 31.8805
+    [ 28:14.269 ]->[ 25:12.865 ] s: 33.3311
+    [ 29:17.587, 30:3.302 ]->[ 26:12.534, 27:9.842 ] s: 35.0117
+    s-score:35.0117
+    t-score:9
+
+
+## Non-detailed alignment output format
+
+The fields in the first line are:
+1. Target name
+2. Ref name
+3. Target size
+4. Ref size
+5. The value 1
+6. 1 for forward, 0 for reverse
+7. s-score
+8. t-score
+
+The second line consists of pairs of fragment numbers that matched between the two sequences.  Odd and even element positions correspond to the left and right sequences (respectively) in the detailed alignment.  Missing numbers represent site indels and can be inffered from the data given.
+
+
+    5038575_0_1196 5038560_0_190 28 34 1 0 35.0117 9
+    0 6 1 7 2 8 4 9 5 10 7 11 9 12 10 13 11 14 12 15 13 16 14 18 15 19 16 20 17 21 19 22 20 23 21 25 22 26 23 27 25 28 26 29 28 31
 
 
 Valuev *et al.*'s original readme
