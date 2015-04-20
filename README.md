@@ -109,8 +109,8 @@ The fields in the first line are:
 4. Ref size
 5. The value 1
 6. 1 for forward, 0 for reverse
-7. s-score
-8. t-score
+7. s-score (This is the optimized during DP, each cell in the DP matrix "points" to the cell within the  _delta x _delta window preceeding it.  It's based on the various optical mapping error parameters.
+8. t-score (This is computed on the optimal path, computed after DP is complete.  It's based solely on _lambda and _nu, so rewarded .9 points for each matched restriction site, and penalized 1.2 points for each unmatched site in either sequence.  Alignments are only emitted for t-scores above 8.
 
 The second line consists of pairs of fragment numbers that matched between the two sequences.  Odd and even element positions correspond to the left and right sequences (respectively) in the detailed alignment.  Missing numbers represent site indels and can be inffered from the data given.
 
