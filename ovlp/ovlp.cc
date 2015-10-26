@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <time.h>
 
 using namespace std;
 
@@ -61,6 +62,8 @@ int main(int argc, char *argv[])
     //assert(ref_if.good());
 
     remove(argv[2]);
+ofstream times;
+times.open("valuev_row_times.csv");
     ofstream ovlps;
     ovlps.open(argv[2]);
     
@@ -78,22 +81,26 @@ int main(int argc, char *argv[])
     assert(end_num <= maps.collection.size());
     assert(start_num >= 0);
 
-    scoring_params sp(.2,1.2,.9,7,17.43,0.58, 0.0015, 0.8, 1, 3);
+    scoring_params sp(.2,1.2,.9,3,17.43,0.58, 0.0015, 0.8, 1, 3);
     //sp.init();
 
     int stored = 0;
 
     for(int i=start_num; i<end_num; i++){
-      for(int j=0; j<i/*maps.collection.size()*/; j++){
+      clock_t start_time = clock();
+      //for(int j=0; j<i/*maps.collection.size()*/; j++){
+      for(int j=i; j<end_num/*maps.collection.size()*/; j++){
 	if(i!=j && maps.collection[i].map_read.size() > 5
 	   && maps.collection[j].map_read.size() > 5){
-	  	  
-	  cout<<endl;
-	  
-	  cout<<"stored: "<<stored<<endl;
 
-	  cout<<"start:"<<start_num<<" end:"<<end_num;
-	  cout<<" cur: "<<i<<"->"<<j<<endl;
+        if (j % 1000 == 0 ) {
+            cout<<endl;
+	  
+            cout<<"stored: "<<stored<<endl;
+
+            cout<<"start:"<<start_num<<" end:"<<end_num;
+            cout<<" cur: "<<i<<"->"<<j<<endl;
+        }
 	  om_read tar_map = maps.collection[i];
 	  om_read for_map = maps.collection[j];
 	  om_read rev_map = for_map.reverse();
@@ -127,17 +134,17 @@ int main(int argc, char *argv[])
 	  double for_ovlp_size = for_alignment.ovlp_size();
 	  double rev_ovlp_size = rev_alignment.ovlp_size();
 
-	  cout<<"fs: "<<for_score<<" ft: "<<for_t_score;
-	  //cout<<" p_v: "<<for_p_value;
-	  cout<<endl;
-	  cout<<"rs: "<<rev_score<<" rt: "<<rev_t_score;
-	  //cout<<" p_v: "<<rev_p_value;
-	  cout<<endl;
+	  // cout<<"fs: "<<for_score<<" ft: "<<for_t_score;
+	  // //cout<<" p_v: "<<for_p_value;
+	  // cout<<endl;
+	  // cout<<"rs: "<<rev_score<<" rt: "<<rev_t_score;
+	  // //cout<<" p_v: "<<rev_p_value;
+	  // cout<<endl;
 
 	  //rev_alignment.output_alignment(cout);
 
-	  double score_thresh = 25;
-	  double t_score_thresh = 8;
+	  double score_thresh = 25;// 21; // originally 25
+	  double t_score_thresh = 8;//7; // originally 8
 	  double t_mult = 0;
 
 	  if(for_score > rev_score){
@@ -231,9 +238,12 @@ int main(int argc, char *argv[])
 	  }
 	}
       }
+      clock_t end_time = clock();
+      times << i << ", " << end_time - start_time  << std::endl;
     }
     ovlps.close();
     det_str.close();
+    times.close();
   }
 
   return 0;  
