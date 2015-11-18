@@ -8,7 +8,7 @@
 #include <time.h>
 
 using namespace std;
-
+#include "getRSS.c"
 #include "./../om_set1/msfl.cpp"
 #include "./../om_set1/m_read.cpp"
 #include "./../om_set1/scoring.cpp"
@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
     const char* detailed_ovlps_filename = "./detailed.ovlps";
     
     remove(detailed_ovlps_filename);
-    ofstream det_str(detailed_ovlps_filename);
-    assert(det_str.good());
+//    ofstream det_str(detailed_ovlps_filename);
+//    assert(det_str.good());
 
     //ifstream ifs("./../datasets/pestis/rough_map_2");
     //ifstream ifs("./../datasets/pestis/rough_maps.v2");
@@ -62,20 +62,24 @@ int main(int argc, char *argv[])
     //assert(ref_if.good());
 
     remove(argv[2]);
-ofstream times;
-times.open("valuev_row_times.csv");
+    std::string row_times_fname = argv[2];
+    row_times_fname += "_valuev_row_times.csv";
+    ofstream times;
+    times.open(row_times_fname.c_str());
     ofstream ovlps;
     ovlps.open(argv[2]);
     
 
     int start_num = atoi(argv[3]);
     int end_num = atoi(argv[4]);
+    if (end_num > maps.collection.size() ) {
+        end_num = maps.collection.size();
+    }
+    // start_num = 0;
+    // end_num = maps.collection.size();
 
-    start_num = 0;
-    end_num = maps.collection.size();
-
-    start_num = 0;
-    end_num = maps.collection.size();
+    // start_num = 0;
+    // end_num = maps.collection.size();
 
     assert(start_num <= end_num);
     assert(end_num <= maps.collection.size());
@@ -89,18 +93,18 @@ times.open("valuev_row_times.csv");
     for(int i=start_num; i<end_num; i++){
       clock_t start_time = clock();
       //for(int j=0; j<i/*maps.collection.size()*/; j++){
-      for(int j=i; j<end_num/*maps.collection.size()*/; j++){
+      for(int j=i; j<maps.collection.size(); j++){
 	if(i!=j && maps.collection[i].map_read.size() > 5
 	   && maps.collection[j].map_read.size() > 5){
 
-        if (j % 1000 == 0 ) {
-            cout<<endl;
+        // if (j % 1000 == 0 ) {
+        //     cout<<endl;
 	  
-            cout<<"stored: "<<stored<<endl;
+        //     cout<<"stored: "<<stored<<endl;
 
-            cout<<"start:"<<start_num<<" end:"<<end_num;
-            cout<<" cur: "<<i<<"->"<<j<<endl;
-        }
+        //     cout<<"start:"<<start_num<<" end:"<<end_num;
+        //     cout<<" cur: "<<i<<"->"<<j<<endl;
+        // }
 	  om_read tar_map = maps.collection[i];
 	  om_read for_map = maps.collection[j];
 	  om_read rev_map = for_map.reverse();
@@ -143,8 +147,8 @@ times.open("valuev_row_times.csv");
 
 	  //rev_alignment.output_alignment(cout);
 
-	  double score_thresh = 25;// 21; // originally 25
-	  double t_score_thresh = 8;//7; // originally 8
+	  double score_thresh =  16; // originally 25
+	  double t_score_thresh = 5; // originally 8
 	  double t_mult = 0;
 
 	  if(for_score > rev_score){
@@ -190,8 +194,8 @@ times.open("valuev_row_times.csv");
 
 	    //if(for_score>score_thresh)
 	    //if(for_t_score > t_score_thresh)
-	    for_alignment.output_alignment(cout);
-	    for_alignment.output_alignment(det_str);
+	    // for_alignment.output_alignment(cout);
+	    // for_alignment.output_alignment(det_str);
 	  }
 	  if(for_score <= rev_score && 
 	     rev_t_score > t_score_thresh &&
@@ -233,8 +237,8 @@ times.open("valuev_row_times.csv");
 	    	    
 	    //if(rev_score > score_thresh)
 	    //if(rev_t_score > t_score_thresh)
-	    rev_alignment.output_alignment(cout);
-	    rev_alignment.output_alignment(det_str);
+	    // rev_alignment.output_alignment(cout);
+	    // rev_alignment.output_alignment(det_str);
 	  }
 	}
       }
@@ -242,7 +246,8 @@ times.open("valuev_row_times.csv");
       times << i << ", " << end_time - start_time  << std::endl;
     }
     ovlps.close();
-    det_str.close();
+//    det_str.close();
+    times << " (peak RSS " << getPeakRSS() << ")" <<std::endl;
     times.close();
   }
 
