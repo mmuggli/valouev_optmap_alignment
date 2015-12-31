@@ -16,9 +16,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  if(argc < 4){
+  if(argc < 6){
     cerr<<"Usage:"<<endl;
-    cerr<<"ovlp <Map_File> <Ouput> <Range num1> <Range num2>"<<endl;
+    cerr<<"ovlp <Map_File> <Ouput> <Range num1> <Range num2> <score_thresh (25)> <t_score_thresh (8)>"<<endl;
   }
   else{
     const char* detailed_ovlps_filename = "./detailed.ovlps";
@@ -136,8 +136,8 @@ int main(int argc, char *argv[])
 
 	  //rev_alignment.output_alignment(cout);
 
-	  double score_thresh = 25;
-	  double t_score_thresh = 8;
+	  double score_thresh = atof(argv[5]); //25;
+	  double t_score_thresh = atof(argv[6]);//8;
 	  double t_mult = 0;
 
 	  if(for_score > rev_score){
