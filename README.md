@@ -1,8 +1,8 @@
 # Notes by Martin Muggli
 
-This git repo is for simple maintance/usability changes relative to Valuev et al.'s original software (the root commit in the git DAG) corresponding to the paper [Valouev,A., *et al.*:Alignment of optical maps. J. Comp. Biol. **13**(2)(2006) 442–462](http://www.ncbi.nlm.nih.gov/pubmed/16597251).
+This git repo is for simple maintance/usability changes relative to Valouev et al.'s original software (the root commit in the git DAG) corresponding to the paper [Valouev,A., *et al.*:Alignment of optical maps. J. Comp. Biol. **13**(2)(2006) 442–462](http://www.ncbi.nlm.nih.gov/pubmed/16597251).
 
-## Valuev Inputs
+## Valouev Inputs
 
 ### Alignment Parameter
 
@@ -29,9 +29,9 @@ as seen in these lines of code (currently you must edit the code and recompile):
     fit/fit_mols_and_store_als.cc:  scoring_params sp(0.2,2,1,5,17.43,0.579, 0.005, 0.8, 3, 1); //scoring parameters
 
 
-contrib/soma_silico2valuev.py will convert from SOMA's in-silico digested file format (the actual file input to their match executable, also used by TWIN) to valuev's format
+contrib/soma_silico2valuev.py will convert from SOMA's in-silico digested file format (the actual file input to their match executable, also used by TWIN) to valouev's format
 
-### Valuev Input File Format
+### Valouev Input File Format
 
 Every sequence of fragments (either on the query or database side) consists of set of three lines:
 
@@ -62,9 +62,9 @@ And here are several in silico digested contigs in a separate file:
     enzyme enzyme 1.752 14.297 0.233 6.33 3.691 22.282 5.844 0.991 2.29 2.93 6.26 3.844 12.49
     ----- <EOF> ---
 
-## Valuev Outputs
+## Valouev Outputs
 
-Valuev generates two output files.
+Valouev generates two output files.
 
 ### Detailed output format
 
@@ -119,7 +119,7 @@ The second line consists of pairs of fragment numbers that matched between the t
     0 6 1 7 2 8 4 9 5 10 7 11 9 12 10 13 11 14 12 15 13 16 14 18 15 19 16 20 17 21 19 22 20 23 21 25 22 26 23 27 25 28 26 29 28 31
 
 
-# Valuev *et al.*'s original readme
+# Valouev *et al.*'s original readme
 
 This package contains the files for the fit alignment and overlap alignment as well as all necessary files to make alignment modifications you may need. 
 
